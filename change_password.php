@@ -1,3 +1,23 @@
+<?php
+    $con = mysqli_connect("localhost", "root", "", "dci_forms");
+    if(isset($_POST['btnLogin'])){
+        $new_password = $_POST['new_password'];
+        $confirm_new_password = $_POST['confirm_new_password'];
+
+        if($new_password != $confirm_new_password){
+            echo "the two passwords are not the same";
+        }else{
+            $md5_password = md5($confirm_new_password);
+            $sql = 'UPDATE tbl_users set password = "'.$md5_password.'" where id = "'.$_SESSION['id']."'";
+            $result = mysqli_query($con, $sql);
+            if($result){
+                echo "password changed";
+            }else{
+                echo "error changing password";
+            }
+        }
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
